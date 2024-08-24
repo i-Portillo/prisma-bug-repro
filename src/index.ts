@@ -4,6 +4,7 @@ const prisma = new PrismaClient()
 
 async function main() {
 
+  // Create the user with two posts
 	await prisma.user.create({
 		data: {
 			id: 1,
@@ -17,6 +18,7 @@ async function main() {
 		},
 	})
 
+  // Try to update the user's posts placing deleteMany before create - Successful
 	await prisma.user.update({
 		where: { id: 1 },
 		data: {
@@ -40,9 +42,9 @@ async function main() {
 			posts: true,
 		},
 	})
-
 	console.log('First update', firstUpdate?.posts)
 
+  // Try to update the user's posts placing create before deleteMany - Error
 	await prisma.user.update({
 		where: { id: 1 },
 		data: {
@@ -53,7 +55,7 @@ async function main() {
 				],
 				deleteMany: {
 					id: {
-						in: [1, 2]
+						authorId: 1
 					}
 				},
 			},
@@ -66,7 +68,6 @@ async function main() {
 			posts: true,
 		},
 	})
-
 	// It's never going to reach this point
 	console.log('Second update', secondUpdate?.posts)
 
