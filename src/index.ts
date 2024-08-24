@@ -53,11 +53,11 @@ async function main() {
 					{ title: 'Post 1', content: 'Content 1', id: 1 },
 					{ title: 'Post 2', content: 'Content 2', id: 2 },
 				],
-				deleteMany: {
-					id: {
+				deleteMany: [
+					{
 						authorId: 1
 					}
-				},
+				],
 			},
 		},
 	})
